@@ -4,8 +4,7 @@ public class ExampleRunnable implements Runnable {
 
     private Long userId;
 
-    private static ThreadLocal<Long> context
-            = new ThreadLocal<>();
+    private static ScopedValue<Long> context = ScopedValue.newInstance();
 
     public ExampleRunnable(Long userId) {
         this.userId = userId;
@@ -13,11 +12,11 @@ public class ExampleRunnable implements Runnable {
 
     @Override
     public void run() {
-        context.set(userId);
-        System.out.println("Thread: " + Thread.currentThread().getName()
-                + " User ID: " + context.get());
+
+        ScopedValue.where(context, userId).run(() -> {
+            System.out.println("Thread: " + Thread.currentThread().getName()
+                    + " User ID: " + context.get());
+        });
+        ;
     }
-
-
-
 }
