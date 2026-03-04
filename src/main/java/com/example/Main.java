@@ -19,7 +19,7 @@ public class Main {
 
             // Create a memory segment for the atoi function here
             // Use the find method on the symbolLookup object to find the atoi function
-            final MemorySegment memorySegment = null;
+            final MemorySegment memorySegment = symbolLookup.find("atoi").orElseThrow();
 
             final var functionDescriptor =
                     FunctionDescriptor.of(JAVA_LONG, ADDRESS);
